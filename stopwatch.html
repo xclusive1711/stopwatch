@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <style>
+    .body{
+    background: url(image.jpg);
+    text-align: center;
+    background-size: cover;
+    padding: 1% 10% 10% 10%;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.body h1{
+    font-size: 25px;
+    text-shadow: 3px 5px 7px purple,-8px 5px 7px purple;
+}
+.body button:hover{
+    background-color: purple;
+    color: white;
+    font-weight: bolder;
+}
+#display{
+    border: 5px solid white;
+    box-shadow: 8px 5px 7px purple,-8px -5px 7px purple;
+    border-radius: 50%;
+    height: 100px;
+    width: 150px;
+    padding: 70px 10px 10px 10px;
+    margin-left: 25%;
+}
+button{
+    font-weight: bold;
+}
+#animate{
+            font-family: "Sofia", sans-serif;
+            font-weight: bolder;
+            background-repeat: no-repeat;
+            font-size: 25px;
+            animation: colorchange;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            animation-delay: 0s;
+            animation-timing-function: ease;
+        }
+        @keyframes colorchange{
+            30%{color: purple;}
+            100%{color: white;}
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="body">
+    <h1 id="animate">XCLUSIVE STOPWATCH</h1>
+    <h2 id="display">00:00:00</h2>
+    <button onclick="start()">START</button>
+    <button onclick="stop()">STOP</button>
+    <button onclick="reset()">RESET</button>
+</div>
+    <script>
+    let secs = 0;
+    let mins = 0;
+    let hrs = 0;
+    let DISPLAY = document.getElementById("display");
+    let displayed = null;
+    function count(){
+        secs++;
+        if(secs == 60){
+            secs = 0;
+            mins++;
+            if (mins == 60){
+                mins = 0;
+                hrs++;
+                if(hrs == 24){
+                    hrs = 0;
+                    mins = 0;
+                    secs = 0;
+                }
+            }
+        }
+        let h = hrs < 10 ? "0" + hrs : hrs;
+        let m = mins < 10 ? "0" + mins : mins;
+        let s = secs < 10 ? "0" + secs : secs;
+        DISPLAY.textContent = `${h} : ${m} : ${s}`;
+    }
+    function start(){
+        // DISPLAY.style.backgroundColor = "white"
+        // DISPLAY.style.color = "limegreen"
+        if (displayed !== null){
+            clearInterval(displayed);
+        }
+        displayed = setInterval(count, 1000);
+    }
+    function stop(){
+        clearInterval(displayed);
+    }
+    function reset(){
+        clearInterval(displayed);
+        DISPLAY.innerText = "00:00:00";
+        hrs = 0, mins = 0, secs = 0;
+    }
+</script>
+</body>
+</html>
